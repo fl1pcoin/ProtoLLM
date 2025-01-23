@@ -27,12 +27,39 @@ def test_publish_message(rabbit_wrapper, mock_pika):
 
     rabbit_wrapper.publish_message(queue_name, message)
 
-    mock_pika.queue_declare.assert_called_once_with(queue=queue_name, durable=True)
+    mock_pika.queue_declare.assert_called_once_with(queue=queue_name, durable=True, arguments={})
     mock_pika.basic_publish.assert_called_once_with(
         exchange="",
         routing_key=queue_name,
         body=json.dumps(message),
-        properties=pika.BasicProperties(delivery_mode=2),
+        properties=pika.BasicProperties(delivery_mode=2, priority=0),
+    )
+
+@pytest.mark.ci
+def test_publish_message_with_priority(rabbit_wrapper, mock_pika):
+    """
+    Tests successful message publishing to a queue with priority.
+    """
+    queue_name = "test_queue"
+    message = {"key": "value"}
+    priority = 5
+
+    rabbit_wrapper.publish_message(queue_name, message, priority=priority)
+
+    mock_pika.queue_declare.assert_called_once_with(
+        queue=queue_name,
+        durable=True,
+        arguments={"x-max-priority": 10}
+    )
+
+    mock_pika.basic_publish.assert_called_once_with(
+        exchange="",
+        routing_key=queue_name,
+        body=json.dumps(message),
+        properties=pika.BasicProperties(
+            delivery_mode=2,
+            priority=priority
+        ),
     )
 
 @pytest.mark.ci

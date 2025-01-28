@@ -1,5 +1,11 @@
 import os
+import os
 import json
+import logging
+from protollm_synthetic.synthetic_pipelines.chains import RAGChain
+from protollm_synthetic.utils import Dataset, VLLMChatOpenAI
+import asyncio
+
 import logging
 from protollm_synthetic.synthetic_pipelines.chains import RAGChain
 from protollm_synthetic.utils import Dataset, VLLMChatOpenAI
@@ -98,8 +104,8 @@ logger = logging.getLogger(__name__)
 path = 'tmp_data/sample_data_rag_spb.json'
 dataset = Dataset(data_col='content', path=path)
 
-qwen_large_api_key = os.environ.get("QWEN_OPENAI_API_KEY")
-qwen_large_api_base = os.environ.get("QWEN_OPENAI_API_BASE")
+qwen_large_api_key = os.environ.get("OPENAI_API_KEY")
+qwen_large_api_base = os.environ.get("OPENAI_API_BASE")
 
 logger.info("Initializing LLM connection")
 
@@ -130,4 +136,5 @@ df = df[['content', 'question', 'answer']]
 logger.info(f"Writing result to {path}")
 df.to_json(path, orient="records")
 
+logger.info("Generation successfully finished")
 logger.info("Generation successfully finished")

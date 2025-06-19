@@ -99,6 +99,7 @@ def re_translator_node(state: dict, config: dict) -> Union[Dict, Command]:
     max_retries = config["configurable"]["max_retries"]
     user_id = config["configurable"].get("user_id", "anonymous")
     language = state["language"]
+    namespace = (user_id, "memory")
 
     if language == "English":
         summary_text = f"User: {state['input']} \n Final system answer: {state.get('response', '')}"
@@ -202,6 +203,7 @@ def supervisor_node(state: Dict[str, Union[str, List[str]]], config: dict) -> Co
     max_retries = config["configurable"]["max_retries"]
     scenario_agents = config["configurable"]["scenario_agents"]
     tools_for_agents = config["configurable"]["tools_for_agents"]
+    
     config["configurable"]["tools_for_agents"]["web_search"] = [web_tools_rendered]
 
     plan = state.get("plan")
@@ -340,9 +342,10 @@ def plan_node(
     max_retries = config["configurable"]["max_retries"]
     tools_descp = config["configurable"]["tools_descp"]
     agents_descp = config["configurable"]["agents_descp"]
+    adds_prompt = config["configurable"]["prompts"]["planner"]
     last_memory = state.get("last_memory", "")
 
-    planner = build_planner_prompt(tools_descp + agents_descp, last_memory) | llm | planner_parser
+    planner = build_planner_prompt(tools_descp + agents_descp, last_memory, additional_hints_for_scenario_agents=adds_prompt) | llm | planner_parser
     query = state["input"] if state["language"] == "English" else state["translation"]
 
     for attempt in range(max_retries):

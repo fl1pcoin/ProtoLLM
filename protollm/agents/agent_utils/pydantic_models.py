@@ -1,7 +1,6 @@
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
-from typing_extensions import TypedDict
 
 
 class Response(BaseModel):

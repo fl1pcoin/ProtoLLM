@@ -43,6 +43,12 @@ It is also possible to pass additional parameters for the model.  Available para
 - `top_p` (not available for self-hosted models)
 - `max_tokens`
 
+There is a separate parameter, extra_body, which some services use to specify permitted providers. Since not all providers from a given service are available in every region, this parameter allows you to define the providers accessible in your region.
+For example:
+```codeblock
+ALLOWED_PROVIDERS='["google-vertex", "azure"]'
+```
+
 Example of how to use the function:
 ```codeblock
 from protollm.connectors.connector_creator import create_llm_connector

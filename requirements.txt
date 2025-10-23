@@ -214,7 +214,7 @@ tokenizers==0.21.1 ; python_version >= "3.12" and python_version < "4.0" or pyth
 tomli==2.2.1 ; python_version >= "3.10" and python_version < "3.11"
 tornado==6.4.2 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
 tqdm==4.67.1 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
-transformers==4.48.2 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
+transformers==4.46.0 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
 typer==0.14.0 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
 types-requests==2.32.0.20241016 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
 typing-extensions==4.12.2 ; python_version >= "3.12" and python_version < "4.0" or python_version >= "3.10" and python_version <= "3.11"
